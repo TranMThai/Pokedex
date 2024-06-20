@@ -1,3 +1,4 @@
+
 export const getBackgroundColorByType = (type: string): string => {
     switch(type){
         case 'fire': return "240, 128, 48"
@@ -17,6 +18,6 @@ export const getBackgroundColorByType = (type: string): string => {
         case 'dark': return "112, 88, 72"
         case 'steel': return "112, 88, 72"
         case 'fairy': return "240, 182, 188"
-        default: return "168, 168, 120"
+        default: return "157, 160, 170"
     }
 }

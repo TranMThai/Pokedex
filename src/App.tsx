@@ -1,10 +1,10 @@
 import './App.scss'
-import PokemonList from './components/pokemonList'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
 
   return (
-    <PokemonList/>
+    <AppRoutes/>
   )
 }
 
