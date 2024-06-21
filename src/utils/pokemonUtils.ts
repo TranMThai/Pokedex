@@ -1,23 +1,41 @@
+export const colorType = new Map<string,string>([
+    ["fire", "#F07F2F"],
+    ["water","#717FFF"],
+    ["electric","#FFD525"],
+    ["grass","#3BCB01"],
+    ["ice","#88DBEC"],
+    ["fighting","#C80000"],
+    ["poison","#AE01CB"],
+    ["ground","#E5BC61"],
+    ["flying","#A890FE"],
+    ["psychic","#FE509B"],
+    ["bug","#9CC31F"],
+    ["rock","#C49100"],
+    ["ghost","#663993"],
+    ["dragon","#6622EE"],
+    ["dark","#494949"],
+    ["steel","#A6A8C6"],
+    ["fairy","#F9A5D1"],
+    ["normal","#ADAB8D"],
+])
 
-export const getBackgroundColorByType = (type: string): string => {
-    switch(type){
-        case 'fire': return "240, 128, 48"
-        case 'water': return "104, 144, 240"
-        case 'electric': return "248, 208, 48"
-        case 'grass': return "120, 200, 80"
-        case 'ice': return "152, 216, 216"
-        case 'fighting': return "192, 48, 40"
-        case 'poison': return "160, 64, 160"
-        case 'ground': return "224, 192, 104"
-        case 'flying': return "161, 138, 230"
-        case 'psychic': return "161, 138, 230"
-        case 'bug': return "168, 184, 32"
-        case 'rock': return "168, 184, 32"
-        case 'ghost': return "168, 184, 32"
-        case 'dragon': return "112, 56, 248"
-        case 'dark': return "112, 88, 72"
-        case 'steel': return "112, 88, 72"
-        case 'fairy': return "240, 182, 188"
-        default: return "157, 160, 170"
-    }
-}
+export const backGroundColorType = new Map<string,string>([
+    ["fire", "#f49551"],
+    ["water","#8894ff"],
+    ["electric","#eccd50"],
+    ["grass","#6fbc51"],
+    ["ice","#b2e4ee"],
+    ["fighting","#d74444"],
+    ["poison","#c350d7"],
+    ["ground","#e7c886"],
+    ["flying","#c3b3ff"],
+    ["psychic","#fc78b1"],
+    ["bug","#bdd961"],
+    ["rock","#d2af50"],
+    ["ghost","#8861ae"],
+    ["dragon","#8955f1"],
+    ["dark","#6c6c6c"],
+    ["steel","#c5c6d7"],
+    ["fairy","#e8b8d1"],
+    ["normal","#c5c4bc"],
+])

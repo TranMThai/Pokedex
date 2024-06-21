@@ -1,0 +1,77 @@
+.pokemon-detail {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    height: 75vh;
+    border-radius: 2em;
+    background-color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -2px rgba(0, 0, 0, .05);
+    margin-top: 12.5vh;
+
+    .basic-info {
+        border-radius: 2em;
+        overflow: hidden;
+        position: relative;
+
+        .id-name {
+            position: absolute;
+            margin: 1em;
+            color: white;
+            font-weight: 700;
+
+            .id {
+                font-size: 25px;
+            }
+
+            .name {
+                font-size: 40px;
+                text-transform: capitalize;
+            }
+        }
+
+        .image-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 80%;
+            }
+        }
+    }
+
+    .additional-info {
+        border-radius: 2em;
+
+        .select {
+            display: flex;
+            justify-content: space-evenly;
+
+            button {
+                border: none;
+                background-color: transparent;
+                font-size: 30px;
+                color: inherit;
+                padding: .2em .5em;
+                margin: .3em;
+            }
+        }
+
+        .section-info {
+            padding: 20px;
+        }
+    }
+}
+
+.choose-page{
+    border-bottom: 0 solid;
+    animation: choose-page-animation .2s forwards;
+}
+
+@keyframes choose-page-animation {
+    to{
+        border-bottom: .2em solid;
+    }
+}

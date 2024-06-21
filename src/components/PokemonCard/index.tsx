@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Pokemon from "../../types/Pokemon"
 import api from "../../api/api"
-import { getBackgroundColorByType } from "../../utils/PokemonUtils"
+import { backGroundColorType, colorType } from "../../utils/PokemonUtils"
 import "./style.scss"
 import Icon from "../../assets/icons"
 
@@ -29,17 +29,16 @@ const PokemonCard: React.FC<IProps> = ({ name }) => {
             </div>
         )
     } else {
-        let backgroundColor = getBackgroundColorByType(pokemon.types[0].type.name)
-        if (pokemon.types[0].type.name === 'normal' && pokemon.types.length > 1) {
-            backgroundColor = getBackgroundColorByType(pokemon.types[1].type.name)
-        }
+        const type1 = pokemon.types[0].type.name
+        const type2: string | undefined = pokemon.types[1]?.type.name
         return (
-            <Link to={"/detail/" + pokemon.name} style={{ width: "22.5%", textDecoration: "none" }}>
+            <Link to={"/detail/" + pokemon.name} style={{ width: "100%", textDecoration: "none" }}>
                 <div className="wrapper">
                     <div className="blur-wrapper">
-                        <div className="card" style={{ backgroundColor: `rgb(${backgroundColor})` }}>
-                            <span>#{pokemon.id}</span>
-                            <img src={pokemon.sprites.front_default} alt="pokemon" loading="lazy" width={"100%"} />
+                        <div className="card" style={{ backgroundColor: backGroundColorType.get(type1==='normal'&&type2!=undefined?type2:type1) }}>
+                            <span>No.{pokemon.id}</span>
+                            <img src={pokemon.sprites.front_default} alt="pokemon" className="image-pokemon" loading="lazy"/>
+                            <div className="blur-layer"></div>
                         </div>
                     </div>
                     <p className="name">{pokemon.name}</p>
@@ -48,7 +47,9 @@ const PokemonCard: React.FC<IProps> = ({ name }) => {
                             pokemon.types.map(t => {
                                 return (
                                     <span className="type" key={pokemon.id + "_" + t.slot}>
-                                        <img src={Icon[t.type.name]} alt="" style={{ backgroundColor: `rgb(${getBackgroundColorByType(t.type.name)})` }}/>
+                                        <span style={{ backgroundColor: colorType.get(t.type.name) }}>
+                                            <img src={Icon[t.type.name]} alt="" />
+                                        </span>
                                         {t.type.name}
                                     </span>
                                 )

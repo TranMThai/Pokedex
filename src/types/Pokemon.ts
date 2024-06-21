@@ -3,14 +3,31 @@ import Type from "./Type.ts"
 type Pokemon = {
     id: number;
     name: string;
-    types: Type[]
+    height: number;
+    weight: number;
+    types: {
+        slot: number;
+        type: {
+            name: string;
+            url: string;
+        }
+    }[];
+    abilities: {
+        ability: { name: string };
+        is_hidden: boolean;
+        slot: number
+    }[]
     sprites: {
         'front_default': string
-        other:{
+        other: {
             'official-artwork': {
                 front_default: string;
+            };
+            showdown: {
+                front_default: string;
+                back_default: string;
             }
         }
-    }
+    };
 }
 export default Pokemon

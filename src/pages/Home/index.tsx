@@ -28,7 +28,7 @@ const Home: React.FC = () => {
     }
 
     return (
-        <div className="container">
+        <>
             <h2>Pokédex</h2>
             <div className="collection">
                 {pokemons.map((p) => (
@@ -38,7 +38,7 @@ const Home: React.FC = () => {
             <div className="btn-center">
                 <button onClick={loadMore}>Load more</button>
             </div>
-        </div>
+        </>
     );
 };
 
