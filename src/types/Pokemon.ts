@@ -18,7 +18,7 @@ type Pokemon = {
         slot: number
     }[]
     sprites: {
-        'front_default': string
+        front_default: string
         other: {
             'official-artwork': {
                 front_default: string;
@@ -29,5 +29,11 @@ type Pokemon = {
             }
         }
     };
+    stats: {
+        base_stat: number;
+        stat: {
+            name: string;
+        }
+    }[]
 }
 export default Pokemon

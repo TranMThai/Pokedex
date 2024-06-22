@@ -39,3 +39,12 @@ export const backGroundColorType = new Map<string,string>([
     ["fairy","#e8b8d1"],
     ["normal","#c5c4bc"],
 ])
+
+export const maxStat:any = {
+    hp: 255,
+    atk: 190,
+    def: 230,
+    sp_atk: 194,
+    sp_def: 230,
+    spe: 180,
+}

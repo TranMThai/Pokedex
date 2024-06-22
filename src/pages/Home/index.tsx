@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Home: React.FC = () => {
     const [pokemons, setPokemons] = useState<Pokemons[]>([]);
-    const [next, setNext] = useState<string>("");
+    const [next, setNext] = useState<string | null>("");
 
     useEffect(() => {
         const getPokemons = async () => {
@@ -18,14 +18,25 @@ const Home: React.FC = () => {
 
         getPokemons();
     }, []);
+    
+    useEffect(() => {
+        if (!next) {
+            const target = document.querySelector('.load-btn') as HTMLElement
+            target.style.display = 'none'
+        } else {
+            const target = document.querySelector('.load-btn') as HTMLElement
+            target.style.display = 'inline'
+        }
+    }, [next])
 
     async function loadMore() {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+        if (next) {
             const res = await axios.get(next);
             setPokemons((prevPokemons) => [...prevPokemons, ...res.data.results]);
             setNext(res.data.next);
         }
     }
+
 
     return (
         <>
@@ -36,7 +47,7 @@ const Home: React.FC = () => {
                 ))}
             </div>
             <div className="btn-center">
-                <button onClick={loadMore}>Load more</button>
+                <button className="load-btn" onClick={loadMore}>Load more</button>
             </div>
         </>
     );

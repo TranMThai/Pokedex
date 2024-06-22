@@ -1,0 +1,59 @@
+.stats {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    padding: 1em;
+
+    strong{
+        font-size: 25px;
+    }
+
+    .stats-list {
+        width: 100%;
+
+        .stat {
+            display: grid;
+            grid-template-columns: 60px 40px 1fr 50px;
+            align-items: center;
+            gap: 0.5em;
+            margin-bottom: 1em;
+            margin: 2em 0;
+
+            .stat-name {
+                text-align: left;
+                font-weight: bold;
+                color: black;
+                text-transform: capitalize;
+            }
+
+            .stat-value {
+                text-align: right;
+            }
+
+            .stat-bar {
+                position: relative;
+                height: 10px;
+                background-color: #F2F1F0;
+                border-radius: 5px;
+                overflow: hidden;
+
+                .stat-bar-inner {
+                    height: 100%;
+                    border-radius: 5px;
+                    animation: stat-animation 1s forwards ease reverse;
+                }
+            }
+
+            .stat-max {
+                text-align: right;
+                color: black;
+            }
+        }
+    }
+}
+
+@keyframes stat-animation {
+    to {
+        width: 0%;
+    }
+}
