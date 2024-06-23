@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import Pokemon from '../../../../types/Pokemon'
+import React, { useContext } from 'react'
+import Pokemon from '../../types/Pokemon'
 import './style.scss'
-import { colorType } from '../../../../constants/pokemonConstants'
-import Icon from '../../../../assets/icons'
+import { colorType } from '../../constants/pokemonConstants'
+import Icon from '../../assets/icons'
+import { PokemonContext } from '../../contexts/PokemonContext'
 
 interface IProps {
     pokemon: Pokemon
-    species: PokemonSpecies
-    weakness: string[]
-    strongness: string[]
 }
 
-const About: React.FC<IProps> = ({ pokemon, species, weakness, strongness }) => {
+const About: React.FC<IProps> = ({ pokemon }) => {
 
-    if (species) {
+    const { species, strongness, weakness } = useContext(PokemonContext)
+
+    if (species && strongness && weakness) {
         const flavorText = species.flavor_text_entries.find(t => t.language.name === 'en')
         const genus = species.genera.find(t => t.language.name === 'en')
 
