@@ -1,5 +1,3 @@
-import Type from "./Type.ts"
-
 type Pokemon = {
     id: number;
     name: string;

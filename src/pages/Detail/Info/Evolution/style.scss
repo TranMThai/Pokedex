@@ -1,74 +1,57 @@
-.about {
-    .flavor-text {
-        font-size: 20px;
-        color: black;
-    }
+.evolution {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 
-    .data-training {
-        margin-top: 1em;
-        display: grid;
-        grid-template-columns: 50% 50%;
+    .evolution-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2em;
 
-        div {
-
-            h3 {
-                margin: 1em 0;
-                font-size: 28px;
-                text-align: center;
-            }
+        span {
 
             div {
 
-                div {
-                    font-size: 20px;
-                    margin: 1.5em 0;
+                .image-container {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
 
-                    span {
-                        color: black;
-                    }
-
-                    .abilities {
-                        display: inline-block;
-                        vertical-align: top;
-                        text-transform: capitalize;
-                        text-wrap: wrap;
-                    }
-
-                    .icon-type {
-                        display: inline-flex;
+                    .image-pokemon {
+                        display: flex;
                         justify-content: center;
                         align-items: center;
-                        height: 1.5em;
-                        padding: 5px;
-                        border-radius: 1em;
-                        color: white;
-                        margin: .2em;
+                        border-radius: 50%;
+                        aspect-ratio: 1/1;
+                        width: 50%;
+                        max-width: 200px;
+                        min-width: 150px;
 
                         img {
-                            height: 100%;
-                            margin-right: .2em;
+                            width: 80%;
                         }
                     }
+                }
 
+                .info-pokemon {
+                    margin-top: 1em;
+                    text-align: center;
+
+                    .id {
+                        font-size: 20px;
+                        opacity: 0.7;
+                    }
+                    .name {
+                        font-size: 25px;
+                        text-transform: capitalize;
+                    }
                 }
             }
         }
 
-        .data {
-            strong {
-                display: inline-block;
-                width: 130px;
-            }
-        }
 
-        .training {
-            border-left: 2px solid;
-            padding: 0 1.5em;
-
-            strong {
-                display: inline-block;
-                width: 165px;
-            }
-        }
     }
 }

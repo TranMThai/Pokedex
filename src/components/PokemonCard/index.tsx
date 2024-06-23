@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Pokemon from "../../types/Pokemon"
 import api from "../../api/api"
-import { backGroundColorType, colorType } from "../../utils/PokemonUtils"
+import { backGroundColorType, colorType } from "../../constants/pokemonConstants"
 import "./style.scss"
 import Icon from "../../assets/icons"
 

@@ -3,16 +3,24 @@ import { useParams } from 'react-router-dom'
 import Pokemon from '../../types/Pokemon'
 import api from '../../api/api'
 import './style.scss'
-import { backGroundColorType, colorType, maxStat } from '../../utils/PokemonUtils'
+import { backGroundColorType, colorType, maxStat } from '../../constants/pokemonConstants'
 import About from './Info/About'
 import Evolution from './Info/Evolution'
 import Stats from './Info/Stats'
 import Icon from '../../assets/icons'
+import axios from 'axios'
+import Type from '../../types/Type'
+import EvolutionChain from '../../types/EvolutionChain'
 
-const Detail = () => {
+const Detail: React.FC = () => {
   const { name } = useParams()
   const [pokemon, setPokemon] = useState<Pokemon>()
   const [pageInfo, setPageInfo] = useState<number>(0)
+  const [species, setSpecies] = useState<PokemonSpecies>()
+  const [type, setType] = useState<Type[]>([])
+  const [weakness, setWeakness] = useState<string[]>([])
+  const [strongness, setStrongness] = useState<string[]>([])
+  const [evolutionChain, setEvolutionChain] = useState<EvolutionChain>()
 
   useEffect(() => {
     const getPokemon = async () => {
@@ -20,19 +28,75 @@ const Detail = () => {
       setPokemon(res.data)
     }
     getPokemon()
-  }, [])
+  }, [name])
 
-  const pageHandle = (e: React.MouseEvent, page: number) => {
-    setPageInfo(page)
-    const buttons = document.querySelectorAll(".button-page") as NodeListOf<HTMLButtonElement>
-    buttons.forEach(b => {
-      b.classList.remove("choose-page")
+
+  useEffect(() => {
+    if (pokemon) {
+      const getPokemonSpecies = async () => {
+        const res = await api.get(`pokemon-species/${pokemon.id}`)
+        setSpecies(res.data)
+      }
+      getPokemonSpecies();
+    }
+  }, [pokemon])
+
+  useEffect(() => {
+    if (species) {
+      const getEvolutionChain = async () => {
+        const res = await axios.get(species.evolution_chain.url)
+        setEvolutionChain(res.data)
+      }
+      getEvolutionChain();
+    }
+  }, [species])
+
+  useEffect(() => {
+    if (species) {
+      const getType = async (url: string) => {
+        const res = await axios.get(url)
+        setType(p => [...p, res.data])
+      }
+      pokemon?.types.forEach(t => {
+        getType(t.type.url)
+      })
+    }
+  }, [species])
+
+
+  useEffect(() => {
+    const weaknesses = new Set(weakness)
+    const strongnesses = new Set(strongness)
+    type.forEach(t => {
+
+      t.damage_relations.no_damage_to.forEach(d => {
+        weaknesses.add(d.name)
+      })
+      t.damage_relations.double_damage_from.forEach(d => {
+        weaknesses.add(d.name)
+      })
+
+      t.damage_relations.no_damage_from.forEach(d => {
+        strongnesses.add(d.name)
+      })
+      t.damage_relations.double_damage_to.forEach(d => {
+        strongnesses.add(d.name)
+      })
     })
-    const target = e.target as HTMLButtonElement
-    target.classList.add("choose-page")
-  }
 
-  if (pokemon) {
+    const weaknessesClone = [...weaknesses]
+    const strongnessesClone = [...strongnesses]
+
+    setWeakness(weaknessesClone.filter(e => !strongnessesClone.includes(e) && e !== pokemon?.types[0].type.name && e !== pokemon?.types[1]?.type.name))
+    setStrongness(strongnessesClone.filter(e => !weaknessesClone.includes(e) && e !== pokemon?.types[0].type.name && e !== pokemon?.types[1]?.type.name))
+
+  }, [type])
+
+  const pageHandle = (page: number) => {
+    setPageInfo(page);
+  };
+
+  if (pokemon && species && type && weakness && strongness && evolutionChain) {
 
     const stats = [
       { name: 'hp', value: pokemon.stats[0].base_stat, max: maxStat.hp },
@@ -71,31 +135,37 @@ const Detail = () => {
         </div>
         <div className='additional-info' style={{ color: color }}>
           <div className='select'>
-            <button className='about-button button-page choose-page' onClick={(e) => pageHandle(e, 0)}>About</button>
-            <button className='stat-button button-page' onClick={(e) => pageHandle(e, 1)}>Stats</button>
-            <button className='evolution-button button-page' onClick={(e) => pageHandle(e, 2)}>Evolution</button>
+            <button className={`about-button button-page ${pageInfo === 0 ? 'choose-page' : ''}`} onClick={() => pageHandle(0)}>About</button>
+            <button className={`stat-button button-page ${pageInfo === 1 ? 'choose-page' : ''}`} onClick={() => pageHandle(1)}>Stats</button>
+            <button className={`evolution-button button-page ${pageInfo === 2 ? 'choose-page' : ''}`} onClick={() => pageHandle(2)}>Evolution</button>
           </div>
           <div className='section-info'>
             {pageInfo === 0 &&
               <About
                 pokemon={pokemon}
+                species={species}
+                weakness={weakness}
+                strongness={strongness}
               />
             }
             {pageInfo === 1 &&
               <Stats
-                pokemon={pokemon}
                 color={color}
                 stats={stats}
               />
             }
             {pageInfo === 2 &&
               <Evolution
-                pokemon={pokemon}
+                evolutionChain={evolutionChain}
               />
             }
           </div>
         </div>
       </div>
+    )
+  } else {
+    return (
+      <div>Loading</div>
     )
   }
 }

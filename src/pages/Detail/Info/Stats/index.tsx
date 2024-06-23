@@ -1,9 +1,7 @@
 import React from 'react';
-import Pokemon from '../../../../types/Pokemon';
 import './style.scss';
 
 interface IProps {
-    pokemon: Pokemon;
     color?: string;
     stats: { name: string, value: number, max: number }[]
 }

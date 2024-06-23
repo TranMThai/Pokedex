@@ -1,66 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Pokemon from '../../../../types/Pokemon'
-import axios from 'axios'
 import './style.scss'
-import Type from '../../../../types/Type'
-import { colorType } from '../../../../utils/PokemonUtils'
+import { colorType } from '../../../../constants/pokemonConstants'
 import Icon from '../../../../assets/icons'
 
 interface IProps {
     pokemon: Pokemon
+    species: PokemonSpecies
+    weakness: string[]
+    strongness: string[]
 }
 
-const About: React.FC<IProps> = ({ pokemon }) => {
-
-    const [species, setSpecies] = useState<PokemonSpecies>()
-    const [type, setType] = useState<Type[]>([])
-    const [weakness, setWeakness] = useState<string[]>([])
-    const [strongness, setStrongness] = useState<string[]>([])
-
-    useEffect(() => {
-        const getPokemonSpecies = async () => {
-            const res = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`)
-            setSpecies(res.data)
-        }
-        getPokemonSpecies();
-        const getType = async (url: string) => {
-            const res = await axios.get(url)
-            setType(p => [...p, res.data])
-        }
-        pokemon.types.forEach(t => {
-            getType(t.type.url)
-        })
-    }, [])
-
-    useEffect(() => {
-
-        const weaknesses = new Set(weakness)
-        const strongnesses = new Set(strongness)
-        type.forEach(t => {
-
-            t.damage_relations.no_damage_to.forEach(d => {
-                weaknesses.add(d.name)
-            })
-            t.damage_relations.double_damage_from.forEach(d => {
-                weaknesses.add(d.name)
-            })
-
-            t.damage_relations.no_damage_from.forEach(d => {
-                strongnesses.add(d.name)
-            })
-            t.damage_relations.double_damage_to.forEach(d => {
-                strongnesses.add(d.name)
-            })
-        })
-
-        const weaknessesClone = [...weaknesses]
-        const strongnessesClone = [...strongnesses]
-
-        setWeakness(weaknessesClone.filter(e => !strongnessesClone.includes(e) && e !== pokemon.types[0].type.name && e !== pokemon.types[1]?.type.name))
-        setStrongness(strongnessesClone.filter(e => !weaknessesClone.includes(e) && e !== pokemon.types[0].type.name && e !== pokemon.types[1]?.type.name))
-
-    }, [type])
-
+const About: React.FC<IProps> = ({ pokemon, species, weakness, strongness }) => {
 
     if (species) {
         const flavorText = species.flavor_text_entries.find(t => t.language.name === 'en')

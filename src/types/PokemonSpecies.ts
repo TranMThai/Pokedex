@@ -1,7 +1,7 @@
 type PokemonSpecies = {
     base_happiness: string;
     capture_rate: string;
-    // evolution_chain: string;
+    evolution_chain: {url: string};
     growth_rate: {
         name: string
     };
