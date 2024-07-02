@@ -1,0 +1,33 @@
+.search {
+    margin: 1em 0 3em;
+
+    div {
+        font-size: 25px;
+        border-radius: 1em;
+        border: .1px solid black;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 200px;
+
+        input {
+            border: 0;
+            padding: .2em .5em;
+            font-size: inherit;
+            outline: none;
+        }
+
+        button {
+            border: 0;
+            padding: .2em;
+            font-size: inherit;
+            background-color: rgb(240, 115, 115);
+            color: white;
+        }
+        button:hover {
+            background-color: rgb(220, 85, 85);
+        }
+        button:active {
+            background-color: rgb(200, 55, 55);
+        }
+    }
+}

@@ -24,7 +24,7 @@ const PokemonCard: React.FC<IProps> = ({ name }) => {
 
     if (!pokemon) {
         return (
-            <div className="loading">
+            <div className="loading-card">
                 Loading...
             </div>
         )

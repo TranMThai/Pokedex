@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import './style.scss'
 import { Link } from 'react-router-dom'
-import { PokemonContext } from '../../contexts/PokemonContext'
+import { usePokemon } from '../../contexts/PokemonContext'
 
 
 const Evolution: React.FC = () => {
 
-    const {pokemonChain} = useContext(PokemonContext)
+    const {pokemonChain} = usePokemon()
 
     return (
         <section className='evolution'>

@@ -1,17 +1,21 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Pokemon from "../types/Pokemon";
 import api from "../api/api";
 import Type from "../types/Type";
 import axios from "axios";
 import EvolutionChain, { EvolvesTo } from "../types/EvolutionChain";
 import { backGroundColorType } from "../constants/pokemonConstants";
+import { IPokemon } from "../pages/Detail";
 
 interface IPokemonContextProviderProps {
     children: React.ReactNode;
-    pokemon: Pokemon
+    pokemon: Pokemon | undefined
+    pokemonChain: IPokemon[] | undefined
+    setPokemonChain:  React.Dispatch<React.SetStateAction<IPokemon[]>>
 }
 
 interface IPokemonValue {
+    pokemon: Pokemon | undefined
     species: PokemonSpecies | undefined;
     strongness: string[] | undefined;
     weakness: string[] | undefined;
@@ -19,28 +23,25 @@ interface IPokemonValue {
     evolutionChain: EvolutionChain | undefined;
 }
 
-interface IPokemon {
-    id: number;
-    name: string;
-    image: string;
-    color: string | undefined;
-}
-
 export const PokemonContext = createContext<IPokemonValue>({
+    pokemon: undefined,
     species: undefined,
     strongness: undefined,
     weakness: undefined,
     pokemonChain: undefined,
-    evolutionChain: undefined,
+    evolutionChain: undefined
 });
 
-export const PokemonProvider = ({ children, pokemon }: IPokemonContextProviderProps) => {
+export const usePokemon = () => {
+    return useContext(PokemonContext)
+}
+
+export const PokemonProvider = ({ children, pokemon, pokemonChain, setPokemonChain }: IPokemonContextProviderProps): JSX.Element => {
 
     const [species, setSpecies] = useState<PokemonSpecies>()
     const [type, setType] = useState<Type[]>([])
     const [weakness, setWeakness] = useState<string[]>([])
     const [strongness, setStrongness] = useState<string[]>([])
-    const [pokemonChain, setPokemonChain] = useState<IPokemon[]>([]);
     const [evolutionChain, setEvolutionChain] = useState<EvolutionChain>()
 
     useEffect(() => {
@@ -120,7 +121,7 @@ export const PokemonProvider = ({ children, pokemon }: IPokemonContextProviderPr
                 }
             }
 
-            const getEvolutionList = async (evo: EvolvesTo) => {
+            const getEvolutionList = async (evo: EvolvesTo): Promise<IPokemon[]> => {
                 const evolutionList: IPokemon[] = []
 
                 const traverse = async (evo: EvolvesTo) => {
@@ -137,12 +138,14 @@ export const PokemonProvider = ({ children, pokemon }: IPokemonContextProviderPr
                 const species: IPokemon[] = await getEvolutionList(evolutionChain.chain)
                 setPokemonChain(species)
             }
-
             fetch()
         }
 
     }, [evolutionChain])
 
-
-    return <PokemonContext.Provider value={{ species, strongness, weakness, pokemonChain, evolutionChain }}>{children}</PokemonContext.Provider>
+    return (
+        <PokemonContext.Provider value={{ pokemon, species, strongness, weakness, pokemonChain, evolutionChain }}>
+            {children}
+        </PokemonContext.Provider>
+    )
 }
