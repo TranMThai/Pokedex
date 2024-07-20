@@ -9,7 +9,7 @@ import Evolution from '../../components/Evolution'
 import Stats from '../../components/Stats'
 import Icon from '../../assets/icons'
 import { PokemonProvider } from '../../contexts/PokemonContext'
-import Pokeball from '/pokeball.svg'
+import Loading from '../../components/Loading'
 
 export interface IPokemon {
   id: number;
@@ -86,11 +86,7 @@ const Detail: React.FC = () => {
 
       <div>
         <PokemonProvider pokemon={pokemon} pokemonChain={pokemonChain} setPokemonChain={setPokemonChain}>
-          <div className="loading-container">
-            <span className="loading">
-              <img src={Pokeball} alt="Loading" />
-            </span>
-          </div>
+          <Loading/>
         </PokemonProvider >
       </div>
     )

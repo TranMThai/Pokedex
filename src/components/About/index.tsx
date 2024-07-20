@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './style.scss'
 import { colorType } from '../../constants/pokemonConstants'
 import Icon from '../../assets/icons'

@@ -4,41 +4,42 @@ import './style.scss'
 import Pokemons from '../../types/Pokemons'
 import axios from 'axios'
 
-interface IProps{
+interface IProps {
     getPokemons: () => Promise<void>,
     setPokemons: React.Dispatch<React.SetStateAction<Pokemons[]>>
-    setNext: React.Dispatch<React.SetStateAction<string|null>>
+    setNext: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const Search: React.FC<IProps> = ({getPokemons, setPokemons, setNext}) => {
+const Search: React.FC<IProps> = ({ getPokemons, setPokemons, setNext }) => {
     const [searchInput, setSearchInput] = useState<string>("")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(e.target.value)
     }
 
-    const handleSearch = () => {
+    const handleSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
         const searchPokemon = async () => {
             const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
             const pokemonsRes: Pokemons[] = res.data.results
-            setPokemons(pokemonsRes.filter(p => p.name.includes(searchInput)))
+            setPokemons(pokemonsRes.filter(p => p.name.includes(searchInput.trim())))
             setNext(null)
         }
-        if(searchInput){
+        if (searchInput) {
             searchPokemon()
-        }else{
+        } else {
             getPokemons()
         }
     }
-    
+
     return (
         <div className='search'>
-            <div>
-                <input type="text" name='search' onChange={handleChange} />
+            <form>
+                <input type="text" onChange={handleChange} />
                 <button onClick={handleSearch}>
                     Search
                 </button>
-            </div>
+            </form>
         </div>
     )
 }

@@ -1,17 +1,18 @@
 import React from 'react'
 import './style.scss'
-import { usePokemon } from '../../contexts/PokemonContext'
+import Pokeball from '/pokeball.svg'
 
 
 const Loading: React.FC = () => {
 
-    const { pokemonChain } = usePokemon()
-
     return (
-        <section className='loading'>
-            <span>Loading...</span>
-        </section>
+        <div className="loading-container">
+            <span className="loading">
+              <img src={Pokeball} alt="Loading" />
+            </span>
+          </div>
     )
+    
 }
 
 export default Loading
