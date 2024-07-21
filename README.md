@@ -1,3 +1,6 @@
+# LINK DEMO:
+https://tranmthai.github.io/Pokedex/
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
