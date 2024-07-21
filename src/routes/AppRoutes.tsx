@@ -5,9 +5,8 @@ import Detail from '../pages/Detail/index.tsx'
 export const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/home" element={<Home />} />
             <Route path="/" element={<Home />} />
-            <Route path='/detail/:name' element={<Detail />} />
+            <Route path='/:name' element={<Detail />} />
         </Routes>
     )
 }

@@ -32,7 +32,7 @@ const PokemonCard: React.FC<IProps> = ({ name }) => {
         const type1 = pokemon.types[0].type.name
         const type2: string | undefined = pokemon.types[1]?.type.name
         return (
-            <Link to={"/detail/" + pokemon.name} style={{ width: "100%", textDecoration: "none" }}>
+            <Link to={"/" + pokemon.name} style={{ width: "100%", textDecoration: "none" }}>
                 <div className="wrapper">
                     <div className="blur-wrapper">
                         <div className="card" style={{ backgroundColor: backGroundColorType.get(type1==='normal'&&type2!=undefined?type2:type1) }}>

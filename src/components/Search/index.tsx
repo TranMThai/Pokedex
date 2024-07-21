@@ -22,7 +22,7 @@ const Search: React.FC<IProps> = ({ getPokemons, setPokemons, setNext }) => {
         const searchPokemon = async () => {
             const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
             const pokemonsRes: Pokemons[] = res.data.results
-            setPokemons(pokemonsRes.filter(p => p.name.includes(searchInput.trim())))
+            setPokemons(pokemonsRes.filter(p => p.name.includes(searchInput.trim().toLocaleLowerCase())))
             setNext(null)
         }
         if (searchInput) {
