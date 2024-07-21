@@ -1,5 +1,4 @@
-# LINK DEMO:
-https://tranmthai.github.io/Pokedex/
+# LINK DEMO: https://tranmthai.github.io/Pokedex/
 
 # React + TypeScript + Vite
 
