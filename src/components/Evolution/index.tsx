@@ -13,7 +13,7 @@ const Evolution: React.FC = () => {
             <div className='evolution-container'>
                 {pokemonChain?.map(s => (
                     <span key={s.id}>
-                        <Link to={`/detail/${s.name}`} style={{ textDecoration: 'none' }}>
+                        <Link to={`/${s.name}`} style={{ textDecoration: 'none' }}>
                             <div>
                                 <div className="image-container">
                                     <div className='image-pokemon' style={{ backgroundColor: s.color }}>
