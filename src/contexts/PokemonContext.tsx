@@ -10,8 +10,7 @@ import { IPokemon } from "../pages/Detail";
 interface IPokemonContextProviderProps {
     children: React.ReactNode;
     pokemon: Pokemon | undefined
-    pokemonChain: IPokemon[] | undefined
-    setPokemonChain:  React.Dispatch<React.SetStateAction<IPokemon[]>>
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface IPokemonValue {
@@ -36,13 +35,14 @@ export const usePokemon = () => {
     return useContext(PokemonContext)
 }
 
-export const PokemonProvider = ({ children, pokemon, pokemonChain, setPokemonChain }: IPokemonContextProviderProps): JSX.Element => {
+export const PokemonProvider = ({ children, pokemon, setLoading }: IPokemonContextProviderProps): JSX.Element => {
 
     const [species, setSpecies] = useState<PokemonSpecies>()
     const [type, setType] = useState<Type[]>([])
     const [weakness, setWeakness] = useState<string[]>([])
     const [strongness, setStrongness] = useState<string[]>([])
     const [evolutionChain, setEvolutionChain] = useState<EvolutionChain>()
+    const [pokemonChain, setPokemonChain] = useState<IPokemon[]>([]);
 
     useEffect(() => {
         if (pokemon) {
@@ -125,9 +125,12 @@ export const PokemonProvider = ({ children, pokemon, pokemonChain, setPokemonCha
                 const evolutionList: IPokemon[] = []
 
                 const traverse = async (evo: EvolvesTo) => {
+                    if (!evo || !evo.species.url) {
+                        return
+                    }
                     const pokemon: IPokemon = await getSpecies(evo.species.url)
                     evolutionList.push(pokemon)
-                    await Promise.all(evo.evolves_to.map(e => traverse(e)))
+                    await traverse(evo.evolves_to[0])
                 }
 
                 await traverse(evo)
@@ -137,6 +140,7 @@ export const PokemonProvider = ({ children, pokemon, pokemonChain, setPokemonCha
             const fetch = async () => {
                 const species: IPokemon[] = await getEvolutionList(evolutionChain.chain)
                 setPokemonChain(species)
+                setLoading(false)
             }
             fetch()
         }
